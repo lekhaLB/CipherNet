@@ -657,9 +657,14 @@ class ChatClient:
 
         try:
             aes_key = os.urandom(32)
+            content = self.message_entry.get()  # Get the message from the entry
+            print(f"Plaintext Message: {content}")
+
             nonce, encrypted_content_bytes, tag = encrypt_message_aes(
                 content.encode('utf-8'), aes_key)
             combined_aes_encrypted_data = nonce + encrypted_content_bytes + tag
+            # Show the encrypted message
+            print(f"Ciphertext: {combined_aes_encrypted_data}")
             encrypted_content_b64 = base64.b64encode(
                 combined_aes_encrypted_data).decode('utf-8')
 
@@ -709,11 +714,15 @@ class ChatClient:
         try:
             # Generate ephemeral AES key for this message
             message_aes_key = os.urandom(32)
+            content = self.message_entry.get()  # Get the message from the entry
+            print(f"Plaintext Message: {content}")
 
             # Encrypt message content with message's AES key
             nonce_msg, encrypted_content_bytes, tag_msg = encrypt_message_aes(
                 content.encode('utf-8'), message_aes_key)
             combined_aes_encrypted_data = nonce_msg + encrypted_content_bytes + tag_msg
+            # Show the encrypted message
+            print(f"Ciphertext: {combined_aes_encrypted_data}")
             encrypted_content_b64 = base64.b64encode(
                 combined_aes_encrypted_data).decode('utf-8')
 
